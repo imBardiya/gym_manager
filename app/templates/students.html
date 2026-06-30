@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+
+{% block title %}
+شاگردها
+{% endblock %}
+
+{% block content %}
+
+<div class="bg-white rounded-xl shadow p-4 mb-6">
+
+    <form
+        method="get"
+        class="flex gap-3">
+
+        <input
+            type="text"
+            name="search"
+            value="{{ search or '' }}"
+            placeholder="جستجوی شاگرد..."
+
+            class="border rounded-lg p-2 flex-1">
+
+        <button
+            class="bg-blue-600 text-white px-5 py-2 rounded-lg">
+
+            جستجو
+
+        </button>
+
+    </form>
+
+</div>
+
+<div class="flex justify-between items-center mb-6">
+
+    <h1 class="text-3xl font-bold">
+
+        لیست شاگردها
+
+    </h1>
+
+    <a
+        href="/students/add"
+        class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg shadow">
+
+        ➕ افزودن شاگرد
+
+    </a>
+
+</div>
+
+<div class="bg-white rounded-xl shadow overflow-hidden">
+
+    <table class="w-full">
+
+        <thead>
+
+            <tr class="bg-gray-100 text-gray-700">
+
+                <th class="p-4 text-right">
+                    نام
+                </th>
+
+                <th class="p-4 text-center">
+                    سانس
+                </th>
+
+                <th class="p-4 text-center">
+                    جلسات مانده
+                </th>
+
+                <th class="p-4 text-center">
+                    غیبت
+                </th>
+
+                <th class="p-4 text-center">
+                    عملیات
+                </th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% for student in students %}
+
+            {% set remaining =
+            student.total_sessions -
+            student.used_sessions %}
+
+            <tr
+                class="border-b hover:bg-gray-50 transition">
+
+                <td class="p-4 font-medium">
+
+                    {{ student.full_name }}
+
+                </td>
+
+                <td class="p-4 text-center">
+
+                    {% if student.session %}
+
+                        {{ student.session.title }}
+
+                    {% else %}
+
+                        <span class="text-gray-400">
+
+                            بدون سانس
+
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+                <td class="p-4 text-center">
+
+                    {% if remaining <= 0 %}
+
+                        <span
+                            class="bg-red-100 text-red-700 px-3 py-1 rounded-full">
+
+                            {{ remaining }}
+
+                        </span>
+
+                    {% elif remaining <= 5 %}
+
+                        <span
+                            class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full">
+
+                            {{ remaining }}
+
+                        </span>
+
+                    {% else %}
+
+                        <span
+                            class="bg-green-100 text-green-700 px-3 py-1 rounded-full">
+
+                            {{ remaining }}
+
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+                <td class="p-4 text-center">
+
+                    <span
+                        class="bg-gray-100 px-3 py-1 rounded-full">
+
+                        {{ student.absence_count }}
+
+                    </span>
+
+                </td>
+
+                <td class="p-4 text-center">
+
+                    <a
+                        href="/students/{{ student.id }}"
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+
+                        مشاهده
+
+                    </a>
+
+                </td>
+
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 class="text-3xl font-bold mb-6">
+    {{ session.title }}
+</h1>
+
+<div class="bg-white p-6 rounded shadow">
+
+    <p class="mb-3">
+        <strong>ساعت:</strong>
+
+        {{ session.start_time }}
+        -
+        {{ session.end_time }}
+    </p>
+
+    <p>
+
+        <strong>نوع:</strong>
+
+        {% if session.session_type == "odd" %}
+            فرد
+        {% elif session.session_type == "even" %}
+            زوج
+        {% else %}
+            هر روز
+        {% endif %}
+
+    </p>
+
+</div>
+
+<div class="mt-8 bg-white rounded shadow p-4">
+
+    <div class="bg-blue-50 border rounded p-3 mb-4">
+
+        
+    
+        <div>
+            {{ now.strftime('%Y-%m-%d %H:%M') }}
+
+            -------
+
+            {{ jalali_now.strftime('%Y/%m/%d - %H:%M') }}
+        </div>
+    
+    </div>
+
+    <h2 class="text-xl font-bold mb-4">
+        اعضای سانس
+    </h2>
+
+    <table class="w-full table-fixed">
+
+        <thead>
+            <tr class="border-b bg-gray-100">
+    
+                <th class="p-3 w-1/4 text-center">
+                    نام
+                </th>
+    
+                <th class="p-3 text-center">
+                    مصرف شده
+                </th>
+    
+                <th class="p-3 text-center">
+                    باقی مانده
+                </th>
+    
+                <th class="p-3 text-center">
+                    غیبت
+                </th>
+    
+                <th class="p-3 text-center">
+                    عملیات
+                </th>
+    
+                <th class="p-3 text-center">
+                    حضور و غیاب
+                </th>
+    
+            </tr>
+        </thead>
+    
+        <tbody>
+    
+        {% for student in students %}
+    
+            <tr class="border-b hover:bg-gray-50">
+    
+                <td class="p-3 text-center">
+                    {{ student.full_name }}
+                </td>
+    
+                <td class="p-3 text-center">
+                    {{ student.used_sessions }}
+                </td>
+    
+                <td class="p-3 text-center">
+                    {% set remaining =
+                        student.total_sessions -
+                        student.used_sessions %}
+                        
+                        {% if remaining <= 0 %}
+                        
+                        <span
+                        class="bg-red-100 text-red-700 px-2 py-1 rounded-full">
+                            {{ remaining }}
+                        </span>
+                        
+                        {% elif remaining <= 5 %}
+                        
+                        <span
+                        class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full">
+                            {{ remaining }}
+                        </span>
+                        
+                        {% else %}
+                        
+                        <span
+                        class="bg-green-100 text-green-700 px-2 py-1 rounded-full">
+                            {{ remaining }}
+                        </span>
+                        
+                        {% endif %}
+                </td>
+    
+                <td class="p-3 text-center">
+                    {{ student.absence_count }}
+                </td>
+    
+                <td class="p-3 text-center">
+    
+                    <a
+                        href="/students/{{ student.id }}"
+                        class="text-blue-600 hover:underline">
+    
+                        مشاهده
+    
+                    </a>
+    
+                </td>
+    
+                <td class="p-3">
+    
+                    <div class="flex justify-center gap-2">
+    
+                        <form
+                            method="post"
+                            action="/students/{{ student.id }}/present">
+    
+                            <button
+                                class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded">
+    
+                                حاضر
+    
+                            </button>
+    
+                        </form>
+    
+                        <form
+                            method="post"
+                            action="/students/{{ student.id }}/absent">
+    
+                            <button
+                                class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded">
+    
+                                غایب
+    
+                            </button>
+    
+                        </form>
+    
+                    </div>
+    
+                </td>
+    
+            </tr>
+    
+        {% endfor %}
+    
+        </tbody>
+    
+    </table>
+
+</div>
+
+{% endblock %}

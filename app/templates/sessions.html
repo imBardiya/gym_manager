@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}
+سانس ها
+{% endblock %}
+
+{% block content %}
+
+<div class="flex justify-between items-center mb-6">
+
+    <h1 class="text-3xl font-bold">
+
+        مدیریت سانس ها
+
+    </h1>
+
+    <a
+        href="/sessions/add"
+        class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg shadow">
+
+        ➕ افزودن سانس
+
+    </a>
+
+</div>
+
+<div class="bg-white rounded-xl shadow overflow-hidden">
+
+    <table class="w-full">
+
+        <thead>
+
+            <tr class="bg-gray-100 text-gray-700">
+
+                <th class="p-4 text-right">
+                    عنوان
+                </th>
+
+                <th class="p-4 text-center">
+                    ساعت
+                </th>
+
+                <th class="p-4 text-center">
+                    نوع
+                </th>
+
+                <th class="p-4 text-center">
+                    تعداد اعضا
+                </th>
+
+                <th class="p-4 text-center">
+                    عملیات
+                </th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% for session in sessions %}
+
+            <tr
+                class="border-b hover:bg-gray-50 transition">
+
+                <td class="p-4 font-medium">
+
+                    {{ session.title }}
+
+                </td>
+
+                <td class="p-4 text-center">
+
+                    {{ session.start_time }}
+
+                    -
+
+                    {{ session.end_time }}
+
+                </td>
+
+                <td class="p-4 text-center">
+
+                    {% if session.session_type == "odd" %}
+
+                        <span
+                            class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full">
+
+                            فرد
+
+                        </span>
+
+                    {% elif session.session_type == "even" %}
+
+                        <span
+                            class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full">
+
+                            زوج
+
+                        </span>
+
+                    {% else %}
+
+                        <span
+                            class="bg-green-100 text-green-700 px-3 py-1 rounded-full">
+
+                            هر روز
+
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+                <td class="p-4 text-center">
+
+                    <span
+                        class="bg-gray-100 px-3 py-1 rounded-full">
+
+                        {{ session.students|length }}
+
+                    </span>
+
+                </td>
+
+                <td class="p-4 text-center">
+
+                    <a
+                        href="/sessions/{{ session.id }}"
+                        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+
+                        مشاهده
+
+                    </a>
+
+                </td>
+
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

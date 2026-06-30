@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}
+داشبورد
+{% endblock %}
+
+{% block content %}
+
+<h1 class="text-3xl font-bold mb-8">
+
+    داشبورد مدیریت باشگاه
+
+</h1>
+
+<div class="grid grid-cols-2 md:grid-cols-3 gap-5">
+
+    <div class="bg-white rounded-xl shadow p-5">
+
+        <div class="text-gray-500">
+            کل شاگردها
+        </div>
+
+        <div class="text-4xl font-bold mt-2">
+            {{ total_students }}
+        </div>
+
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-5">
+
+        <div class="text-gray-500">
+            تعداد سانس‌ها
+        </div>
+
+        <div class="text-4xl font-bold mt-2">
+            {{ total_sessions }}
+        </div>
+
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-5">
+
+        <div class="text-gray-500">
+            نیازمند تمدید
+        </div>
+
+        <div class="text-4xl font-bold text-red-600 mt-2">
+            {{ students_need_renew }}
+        </div>
+
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-5">
+
+        <div class="text-gray-500">
+            حضور امروز
+        </div>
+
+        <div class="text-4xl font-bold text-green-600 mt-2">
+            {{ present_today }}
+        </div>
+
+    </div>
+
+    <div class="bg-white rounded-xl shadow p-5">
+
+        <div class="text-gray-500">
+            غیبت امروز
+        </div>
+
+        <div class="text-4xl font-bold text-red-600 mt-2">
+            {{ absent_today }}
+        </div>
+
+    </div>
+
+</div>
+
+<div class="mt-8">
+
+    <a
+        href="/backup/download"
+        class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-lg">
+
+        ⬇ دانلود بکاپ
+
+    </a>
+
+</div>
+
+{% endblock %}

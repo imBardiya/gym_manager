@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 class="text-2xl font-bold mb-6">
+
+    افزودن سانس
+
+</h1>
+
+<form method="post">
+
+    <input
+        name="title"
+        placeholder="عنوان سانس"
+        class="border p-2 w-full mb-3">
+
+    <input
+        name="start_time"
+        placeholder="17:00"
+        class="border p-2 w-full mb-3">
+
+    <input
+        name="end_time"
+        placeholder="18:30"
+        class="border p-2 w-full mb-3">
+
+    <select
+        name="session_type"
+        class="border p-2 w-full mb-3">
+
+        <option value="daily">
+            هر روز
+        </option>
+
+        <option value="odd">
+            فرد
+        </option>
+
+        <option value="even">
+            زوج
+        </option>
+
+    </select>
+
+    <button
+        class="bg-blue-600 text-white px-5 py-2 rounded">
+
+        ثبت سانس
+
+    </button>
+
+</form>
+
+{% endblock %}

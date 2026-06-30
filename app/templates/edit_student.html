@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 class="text-2xl font-bold mb-6">
+    ویرایش شاگرد
+</h1>
+
+<form 
+    method="post"
+    action="/students/{{ student.id }}/update"
+    >
+
+    <input
+        name="full_name"
+        value="{{ student.full_name }}"
+        class="border p-2 w-full mb-3">
+
+    <input
+        name="phone"
+        value="{{ student.phone or '' }}"
+        class="border p-2 w-full mb-3">
+
+    <input
+        name="total_sessions"
+        type="number"
+        value="{{ student.total_sessions }}"
+        class="border p-2 w-full mb-3">
+
+        <label>
+            سانس
+        </label>
+        
+        <select
+            name="session_id"
+            class="border p-2 w-full mb-3">
+        
+            <option value="">
+                بدون سانس
+            </option>
+        
+            {% for session in sessions %}
+        
+                <option
+                    value="{{ session.id }}"
+        
+                    {% if student.session_id == session.id %}
+                    selected
+                    {% endif %}
+                >
+        
+                    {{ session.title }}
+        
+                </option>
+        
+            {% endfor %}
+        
+        </select>
+
+    <textarea
+        name="notes"
+        class="border p-2 w-full mb-3">{{ student.notes or '' }}</textarea>
+
+    <label>
+
+        <input
+            type="checkbox"
+            name="deduct_absence"
+
+            {% if student.deduct_absence %}
+            checked
+            {% endif %}
+        >
+
+        غیبت از جلسات کم شود
+
+    </label>
+
+    <br><br>
+
+    <label>
+        جلسات حاضر جاافتاده
+    </label>
+
+    <input
+        name="missed_present_sessions"
+        value="0"
+        type="number"
+        class="border p-2 w-full mb-3">
+
+    <label>
+        جلسات غیبت جاافتاده
+    </label>
+
+    <input
+        name="missed_absent_sessions"
+        value="0"
+        type="number"
+        class="border p-2 w-full mb-3">
+
+    <button
+        class="bg-blue-600 text-white px-5 py-2 rounded">
+
+        ذخیره
+
+    </button>
+
+</form>
+
+
+
+{% endblock %}

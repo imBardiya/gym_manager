@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}
+افزودن شاگرد
+{% endblock %}
+
+{% block content %}
+
+<h1 class="text-2xl font-bold mb-6">
+    افزودن شاگرد جدید
+</h1>
+
+<form method="post">
+
+    <div class="mb-4">
+
+        <label>
+            نام و نام خانوادگی
+        </label>
+
+        <input
+            type="text"
+            name="full_name"
+            class="w-full border p-2 rounded"
+            required>
+
+    </div>
+
+    <div class="mb-4">
+
+        <label>
+            شماره تماس
+        </label>
+
+        <input
+            type="text"
+            name="phone"
+            class="w-full border p-2 rounded">
+
+    </div>
+
+    <div class="mb-4">
+
+        <label>
+            تعداد جلسات
+        </label>
+
+        <input
+            type="number"
+            name="total_sessions"
+            class="w-full border p-2 rounded"
+            required>
+
+    </div>
+
+    <button
+        type="submit"
+        class="bg-blue-600 text-white px-4 py-2 rounded">
+
+        ثبت شاگرد
+
+    </button>
+
+</form>
+
+{% endblock %}
