@@ -12,6 +12,7 @@ from app.routers.students import router as students_router
 from app.routers.sessions import router as sessions_router
 from app.routers.attendance import router as attendance_router
 from app.routers.backup import router as backup_router
+from app.routers.restore import router as restore_router
 
 from sqlalchemy import func
 
@@ -40,6 +41,7 @@ app.include_router(students_router)
 app.include_router(sessions_router)
 app.include_router(attendance_router)
 app.include_router(backup_router)
+app.include_router(restore_router)
 
 
 @app.get("/")
