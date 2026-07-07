@@ -18,6 +18,7 @@ from fastapi import Request
 from fastapi.responses import RedirectResponse
 
 from app.main import templates
+from typing import Optional
 
 router = APIRouter(
     prefix="/students",
@@ -321,8 +322,8 @@ def mark_absent(
 def update_student(
     student_id: int,
 
-    session_id: int = Form(None),
-
+    session_id: Optional[str] = Form(None),
+    
     full_name: str = Form(...),
 
     phone: str = Form(None),
@@ -361,6 +362,11 @@ def update_student(
     student.deduct_absence = deduct_absence
 
     student.notes = notes
+
+    if session_id == "":
+        session_id = None
+    else:
+        session_id = int(session_id)
 
     student.session_id = session_id
 
