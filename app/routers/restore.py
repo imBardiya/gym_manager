@@ -102,3 +102,39 @@ def restore_backup():
         "students": len(students),
         "attendance": len(attendance)
     }
+
+
+from sqlalchemy import text
+
+
+@router.get("/fix-sequence")
+def fix_sequence():
+
+    db = SessionLocal()
+
+    db.execute(text("""
+        SELECT setval(
+            pg_get_serial_sequence('students','id'),
+            COALESCE((SELECT MAX(id) FROM students),1)
+        );
+    """))
+
+    db.execute(text("""
+        SELECT setval(
+            pg_get_serial_sequence('sessions','id'),
+            COALESCE((SELECT MAX(id) FROM sessions),1)
+        );
+    """))
+
+    db.execute(text("""
+        SELECT setval(
+            pg_get_serial_sequence('attendance','id'),
+            COALESCE((SELECT MAX(id) FROM attendance),1)
+        );
+    """))
+
+    db.commit()
+
+    return {
+        "message": "Sequences fixed successfully"
+    }
