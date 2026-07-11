@@ -79,7 +79,7 @@ def list_students(
             )
         )
 
-    students = students_query.all()
+    students = db.query(Student).order_by(Student.full_name.asc()).all()
 
     return templates.TemplateResponse(
         request=request,
