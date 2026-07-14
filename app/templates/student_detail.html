@@ -256,6 +256,21 @@
 
                     </form>
 
+                    <form
+    method="post"
+    action="/attendance/{{ record.id }}/delete"
+    style="display:inline;">
+
+    <button
+        onclick="return confirm('آیا از حذف این رکورد حضور و غیاب مطمئن هستید؟')"
+        class="bg-red-700 text-white px-3 py-1 rounded ml-2">
+
+        حذف
+
+    </button>
+
+                    </form>
+
                 </td>
 
             </tr>
