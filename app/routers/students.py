@@ -426,3 +426,49 @@ def renew_student(
         url=f"/students/{student_id}",
         status_code=303
     )
+
+from fastapi.responses import RedirectResponse
+@router.post("/attendance/{attendance_id}/delete") def delete_attendance( attendance_id: int, db: Session = Depends(get_db) ):
+attendance = (
+    db.query(Attendance)
+    .filter(Attendance.id == attendance_id)
+    .first()
+)
+
+if not attendance:
+    raise HTTPException(
+        status_code=404,
+        detail="Attendance not found"
+    )
+
+student = (
+    db.query(Student)
+    .filter(Student.id == attendance.student_id)
+    .first()
+)
+
+if attendance.status == "present":
+
+    if student.used_sessions > 0:
+        student.used_sessions -= 1
+
+else:
+
+    if student.absence_count > 0:
+        student.absence_count -= 1
+
+    if student.deduct_absence:
+
+        if student.used_sessions > 0:
+            student.used_sessions -= 1
+
+student_id = student.id
+
+db.delete(attendance)
+
+db.commit()
+
+return RedirectResponse(
+    url=f"/students/{student_id}",
+    status_code=303
+)
