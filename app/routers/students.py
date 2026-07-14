@@ -79,7 +79,7 @@ def list_students(
             )
         )
 
-    students = db.query(Student).order_by(Student.full_name.asc()).all()
+    students = students_query.order_by(Student.full_name.asc()).all()
 
     return templates.TemplateResponse(
         request=request,
@@ -426,27 +426,30 @@ def renew_student(
         url=f"/students/{student_id}",
         status_code=303
     )
-
-from fastapi.responses import RedirectResponse
+    
 @router.post("/attendance/{attendance_id}/delete")
-def delete_attendance( attendance_id: int, db: Session = Depends(get_db) ):
+def delete_attendance(
+    attendance_id: int,
+    db: Session = Depends(get_db)
+):
+
     attendance = (
-    db.query(Attendance)
-    .filter(Attendance.id == attendance_id)
-    .first()
-)
+        db.query(Attendance)
+        .filter(Attendance.id == attendance_id)
+        .first()
+    )
 
     if not attendance:
         raise HTTPException(
-        status_code=404,
-        detail="Attendance not found"
-    )
+            status_code=404,
+            detail="Attendance not found"
+        )
 
     student = (
-    db.query(Student)
-    .filter(Student.id == attendance.student_id)
-    .first()
-)
+        db.query(Student)
+        .filter(Student.id == attendance.student_id)
+        .first()
+    )
 
     if attendance.status == "present":
 
@@ -470,6 +473,6 @@ def delete_attendance( attendance_id: int, db: Session = Depends(get_db) ):
     db.commit()
 
     return RedirectResponse(
-    url=f"/students/{student_id}",
-    status_code=303
-)
+        url=f"/students/{student_id}",
+        status_code=303
+    )
