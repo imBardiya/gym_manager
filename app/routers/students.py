@@ -214,6 +214,7 @@ def edit_student_form(
 @router.post("/{student_id}/present")
 def mark_present(
     student_id: int,
+    attendance_date: str = Form(None),
     db: Session = Depends(get_db)
 ):
 
@@ -229,7 +230,10 @@ def mark_present(
             detail="Student not found"
         )
 
-    today = date.today()
+    if attendance_date:
+        today = date.fromisoformat(attendance_date)
+    else:
+        today = date.today()
 
     existing = (
         db.query(Attendance)
@@ -266,9 +270,9 @@ def mark_present(
 @router.post("/{student_id}/absent")
 def mark_absent(
     student_id: int,
+    attendance_date: str = Form(None),
     db: Session = Depends(get_db)
 ):
-
     student = (
         db.query(Student)
         .filter(Student.id == student_id)
@@ -281,7 +285,10 @@ def mark_absent(
             detail="Student not found"
         )
 
-    today = date.today()
+    if attendance_date:
+        today = date.fromisoformat(attendance_date)
+    else:
+        today = date.today()
 
     existing = (
         db.query(Attendance)
