@@ -102,31 +102,58 @@
 
 </div>
 
-<div class="mt-6 flex gap-4">
+<div class="mt-6">
 
-    <form method="post"
-          action="/students/{{ student.id }}/present">
+    <label class="block mb-2 font-bold">
+        تاریخ ثبت حضور و غیاب
+    </label>
 
-        <button
-            class="bg-green-600 text-white px-5 py-2 rounded">
+    <input
+        type="date"
+        id="attendance_date"
+        class="border rounded p-2 mb-4">
 
-            ثبت حضور
+    <div class="flex gap-4">
 
-        </button>
+        <form
+            method="post"
+            action="/students/{{ student.id }}/present"
+            onsubmit="document.getElementById('present_date').value=document.getElementById('attendance_date').value;">
 
-    </form>
+            <input
+                type="hidden"
+                name="attendance_date"
+                id="present_date">
 
-    <form method="post"
-          action="/students/{{ student.id }}/absent">
+            <button
+                class="bg-green-600 text-white px-5 py-2 rounded">
 
-        <button
-            class="bg-red-600 text-white px-5 py-2 rounded">
+                ثبت حضور
 
-            ثبت غیبت
+            </button>
 
-        </button>
+        </form>
 
-    </form>
+        <form
+            method="post"
+            action="/students/{{ student.id }}/absent"
+            onsubmit="document.getElementById('absent_date').value=document.getElementById('attendance_date').value;">
+
+            <input
+                type="hidden"
+                name="attendance_date"
+                id="absent_date">
+
+            <button
+                class="bg-red-600 text-white px-5 py-2 rounded">
+
+                ثبت غیبت
+
+            </button>
+
+        </form>
+
+    </div>
 
 </div>
 
