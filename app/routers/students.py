@@ -337,6 +337,10 @@ def update_student(
 
     total_sessions: int = Form(...),
 
+    used_sessions: int = Form(...),
+
+    absence_count: int = Form(...),
+
     deduct_absence: bool = Form(False),
 
     notes: str = Form(None),
@@ -365,6 +369,10 @@ def update_student(
     student.phone = phone if phone else None
 
     student.total_sessions = total_sessions
+
+    student.used_sessions = used_sessions
+
+    student.absence_count = absence_count
 
     student.deduct_absence = deduct_absence
 
@@ -425,7 +433,9 @@ def renew_student(
             detail="Student not found"
         )
 
-    student.total_sessions += sessions
+    student.total_sessions = sessions
+
+    student.used_sessions = 0
 
     db.commit()
 
