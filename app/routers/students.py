@@ -231,9 +231,17 @@ def mark_present(
         )
 
     if attendance_date:
-        today = date.fromisoformat(attendance_date)
+
+        jalali_date = jdatetime.datetime.strptime(
+            attendance_date,
+            "%Y/%m/%d"
+        )
+
+        today = jalali_date.togregorian().date()
+
     else:
-        today = date.today()
+
+    today = date.today()
 
     existing = (
         db.query(Attendance)
@@ -286,9 +294,17 @@ def mark_absent(
         )
 
     if attendance_date:
-        today = date.fromisoformat(attendance_date)
+
+        jalali_date = jdatetime.datetime.strptime(
+            attendance_date,
+            "%Y/%m/%d"
+        )
+
+        today = jalali_date.togregorian().date()
+
     else:
-        today = date.today()
+
+    today = date.today()
 
     existing = (
         db.query(Attendance)
