@@ -303,7 +303,7 @@ def mark_absent(
         today = jalali_date.togregorian().date()
 
     else:
-
+        
         today = date.today()
 
     existing = (
