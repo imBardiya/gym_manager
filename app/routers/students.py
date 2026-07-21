@@ -337,17 +337,9 @@ def update_student(
 
     total_sessions: int = Form(...),
 
-    #used_sessions: int = Form(...),
-
-    #absence_count: int = Form(...),
-
     deduct_absence: bool = Form(False),
 
     notes: str = Form(None),
-
-    missed_present_sessions: int = Form(0),
-
-    missed_absent_sessions: int = Form(0),
 
     db: Session = Depends(get_db)
 ):
@@ -384,29 +376,7 @@ def update_student(
         session_id = int(session_id)
 
     student.session_id = session_id
-
-    # جلسات حاضر جاافتاده
-
-    if missed_present_sessions > 0:
-
-        student.used_sessions += (
-            missed_present_sessions
-        )
-
-    # غیبت های جاافتاده
-
-    if missed_absent_sessions > 0:
-
-        student.absence_count += (
-            missed_absent_sessions
-        )
-
-        if student.deduct_absence:
-
-            student.used_sessions += (
-                missed_absent_sessions
-            )
-
+    
     db.commit()
 
     return RedirectResponse(
