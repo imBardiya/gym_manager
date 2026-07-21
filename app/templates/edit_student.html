@@ -28,6 +28,28 @@
         class="border p-2 w-full mb-3">
 
         <label>
+    جلسات مصرف شده
+</label>
+
+<input
+    name="used_sessions"
+    type="number"
+    min="0"
+    value="{{ student.used_sessions }}"
+    class="border p-2 w-full mb-3">
+
+<label>
+    تعداد غیبت
+</label>
+
+<input
+    name="absence_count"
+    type="number"
+    min="0"
+    value="{{ student.absence_count }}"
+    class="border p-2 w-full mb-3">
+
+        <label>
             سانس
         </label>
         
@@ -78,26 +100,7 @@
 
     <br><br>
 
-    <label>
-        جلسات حاضر جاافتاده
-    </label>
-
-    <input
-        name="missed_present_sessions"
-        value="0"
-        type="number"
-        class="border p-2 w-full mb-3">
-
-    <label>
-        جلسات غیبت جاافتاده
-    </label>
-
-    <input
-        name="missed_absent_sessions"
-        value="0"
-        type="number"
-        class="border p-2 w-full mb-3">
-
+    
     <button
         class="bg-blue-600 text-white px-5 py-2 rounded">
 
