@@ -43,19 +43,6 @@ app.include_router(attendance_router)
 app.include_router(backup_router)
 app.include_router(restore_router)
 
-from sqlalchemy import text
-from app.database import engine
-
-
-@app.on_event("startup")
-def add_column():
-    with engine.connect() as conn:
-        conn.execute(text("""
-            ALTER TABLE attendance
-            ADD COLUMN IF NOT EXISTS affects_sessions BOOLEAN DEFAULT TRUE
-        """))
-        conn.commit()
-
 
 @app.get("/")
 def dashboard(request: Request,db: Session = Depends(get_db)):
