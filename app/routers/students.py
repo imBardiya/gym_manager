@@ -241,7 +241,7 @@ def mark_present(
 
     else:
 
-    today = date.today()
+        today = date.today()
 
     existing = (
         db.query(Attendance)
@@ -304,7 +304,7 @@ def mark_absent(
 
     else:
 
-    today = date.today()
+        today = date.today()
 
     existing = (
         db.query(Attendance)
