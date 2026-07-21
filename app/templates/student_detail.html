@@ -112,7 +112,8 @@
     type="text"
     id="attendance_date"
     class="border rounded p-2 mb-4"
-    placeholder="انتخاب تاریخ">
+    placeholder="انتخاب تاریخ"
+    readonly>
 
     <div class="flex gap-4">
 
@@ -333,17 +334,22 @@
 
 </form>
 
-<link rel="stylesheet" href="https://unpkg.com/persian-datepicker@1.2.0/dist/css/persian-datepicker.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.2/dist/css/persian-datepicker.min.css">
 
-<script src="https://unpkg.com/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 
-<script src="https://unpkg.com/persian-datepicker@1.2.0/dist/js/persian-datepicker.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.2/dist/js/persian-datepicker.min.js"></script>
 
 <script>
 
-$("#attendance_date").persianDatepicker({
-    format: "YYYY/MM/DD"
+$(document).ready(function(){
+
+    $("#attendance_date").persianDatepicker({
+        format: "YYYY/MM/DD",
+        autoClose: true,
+        initialValue: false
+    });
+
 });
 
 </script>
