@@ -6,353 +6,303 @@
 
 {% block content %}
 
-<h1 class="text-3xl font-bold mb-6">
-    {{ student.full_name }}
-</h1>
+<h1 class="text-3xl font-bold mb-6">  
+    {{ student.full_name }}  
+</h1>  <div class="bg-white rounded-xl shadow p-6 mb-6">  <h1 class="text-3xl font-bold mb-2">  
 
-<div class="bg-white rounded-xl shadow p-6 mb-6">
+    👤 {{ student.full_name }}  
 
-    <h1 class="text-3xl font-bold mb-2">
+</h1>  
 
-        👤 {{ student.full_name }}
+<div class="text-gray-600 mb-2">  
 
-    </h1>
+    📞 {{ student.phone or "ثبت نشده" }}  
 
-    <div class="text-gray-600 mb-2">
+</div>  
 
-        📞 {{ student.phone or "ثبت نشده" }}
+<div class="text-gray-600">  
 
-    </div>
+    🏋️  
 
-    <div class="text-gray-600">
+    {% if student.session %}  
 
-        🏋️
+        {{ student.session.title }}  
 
-        {% if student.session %}
+        |  
 
-            {{ student.session.title }}
+        {{ student.session.start_time }}  
 
-            |
+        -  
 
-            {{ student.session.start_time }}
+        {{ student.session.end_time }}  
 
-            -
+    {% else %}  
 
-            {{ student.session.end_time }}
+        بدون سانس  
 
-        {% else %}
-
-            بدون سانس
-
-        {% endif %}
-
-    </div>
+    {% endif %}  
 
 </div>
 
-<div class="grid grid-cols-4 gap-4 mb-6">
+</div>  <div class="grid grid-cols-4 gap-4 mb-6">  <div class="bg-blue-100 rounded-xl p-4 text-center">  
 
-    <div class="bg-blue-100 rounded-xl p-4 text-center">
+    <div class="text-sm text-gray-600">  
+        جلسات کل  
+    </div>  
 
-        <div class="text-sm text-gray-600">
-            جلسات کل
-        </div>
+    <div class="text-3xl font-bold">  
+        {{ student.total_sessions }}  
+    </div>  
 
-        <div class="text-3xl font-bold">
-            {{ student.total_sessions }}
-        </div>
+</div>  
 
-    </div>
+<div class="bg-green-100 rounded-xl p-4 text-center">  
 
-    <div class="bg-green-100 rounded-xl p-4 text-center">
+    <div class="text-sm text-gray-600">  
+        مصرف شده  
+    </div>  
 
-        <div class="text-sm text-gray-600">
-            مصرف شده
-        </div>
+    <div class="text-3xl font-bold">  
+        {{ student.used_sessions }}  
+    </div>  
 
-        <div class="text-3xl font-bold">
-            {{ student.used_sessions }}
-        </div>
+</div>  
 
-    </div>
+<div class="bg-yellow-100 rounded-xl p-4 text-center">  
 
-    <div class="bg-yellow-100 rounded-xl p-4 text-center">
+    <div class="text-sm text-gray-600">  
+        باقی مانده  
+    </div>  
 
-        <div class="text-sm text-gray-600">
-            باقی مانده
-        </div>
+    <div class="text-3xl font-bold">  
+        {{ student.total_sessions - student.used_sessions }}  
+    </div>  
 
-        <div class="text-3xl font-bold">
-            {{ student.total_sessions - student.used_sessions }}
-        </div>
+</div>  
 
-    </div>
+<div class="bg-red-100 rounded-xl p-4 text-center">  
 
-    <div class="bg-red-100 rounded-xl p-4 text-center">
+    <div class="text-sm text-gray-600">  
+        غیبت  
+    </div>  
 
-        <div class="text-sm text-gray-600">
-            غیبت
-        </div>
-
-        <div class="text-3xl font-bold">
-            {{ student.absence_count }}
-        </div>
-
-    </div>
+    <div class="text-3xl font-bold">  
+        {{ student.absence_count }}  
+    </div>  
 
 </div>
 
-<div class="mt-6">
+</div>  <div class="mt-6">  <label class="block mb-2 font-bold">  
+    تاریخ ثبت حضور و غیاب  
+</label>  
 
-    <label class="block mb-2 font-bold">
-        تاریخ ثبت حضور و غیاب
-    </label>
+<input  
+    type="date"  
+    id="attendance_date"  
+    class="border rounded p-2 mb-4">  
 
-    <input
-    type="text"
-    id="attendance_date"
-    class="border rounded p-2 mb-4"
-    placeholder=" پارت دو انتخاب تاریخ"
-    readonly>
+<div class="flex gap-4">  
 
-    <div class="flex gap-4">
+    <form  
+        method="post"  
+        action="/students/{{ student.id }}/present"  
+        onsubmit="document.getElementById('present_date').value=document.getElementById('attendance_date').value;">  
 
-        <form
-            method="post"
-            action="/students/{{ student.id }}/present"
-            onsubmit="document.getElementById('present_date').value=document.getElementById('attendance_date').value;">
+        <input  
+            type="hidden"  
+            name="attendance_date"  
+            id="present_date">  
 
-            <input
-                type="hidden"
-                name="attendance_date"
-                id="present_date">
+        <button  
+            class="bg-green-600 text-white px-5 py-2 rounded">  
 
-            <button
-                class="bg-green-600 text-white px-5 py-2 rounded">
+            ثبت حضور  
 
-                ثبت حضور
+        </button>  
 
-            </button>
+    </form>  
 
-        </form>
+    <form  
+        method="post"  
+        action="/students/{{ student.id }}/absent"  
+        onsubmit="document.getElementById('absent_date').value=document.getElementById('attendance_date').value;">  
 
-        <form
-            method="post"
-            action="/students/{{ student.id }}/absent"
-            onsubmit="document.getElementById('absent_date').value=document.getElementById('attendance_date').value;">
+        <input  
+            type="hidden"  
+            name="attendance_date"  
+            id="absent_date">  
 
-            <input
-                type="hidden"
-                name="attendance_date"
-                id="absent_date">
+        <button  
+            class="bg-red-600 text-white px-5 py-2 rounded">  
 
-            <button
-                class="bg-red-600 text-white px-5 py-2 rounded">
+            ثبت غیبت  
 
-                ثبت غیبت
+        </button>  
 
-            </button>
-
-        </form>
-
-    </div>
+    </form>  
 
 </div>
 
-<div class="mt-6 bg-white rounded-xl shadow p-6">
+</div>  <div class="mt-6 bg-white rounded-xl shadow p-6">  <h2 class="text-xl font-bold mb-4">  
 
-    <h2 class="text-xl font-bold mb-4">
+    تمدید جلسات  
 
-        تمدید جلسات
+</h2>  
 
-    </h2>
+<form  
+    method="post"  
+    action="/students/{{ student.id }}/renew"  
+    class="flex gap-3 items-center">  
 
-    <form
-        method="post"
-        action="/students/{{ student.id }}/renew"
-        class="flex gap-3 items-center">
+    <input  
+        type="number"  
+        name="sessions"  
+        min="1"  
+        placeholder="تعداد جلسات"  
 
-        <input
-            type="number"
-            name="sessions"
-            min="1"
-            placeholder="تعداد جلسات"
+        class="border rounded-lg p-2">  
 
-            class="border rounded-lg p-2">
+    <button  
+        class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg">  
 
-        <button
-            class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg">
+        تمدید  
 
-            تمدید
-
-        </button>
-
-    </form>
-
-</div>
-
-<div class="mt-8 bg-white rounded-xl shadow p-6">
-
-    <h2 class="text-2xl font-bold mb-5">
-
-        تاریخچه حضور و غیاب
-
-    </h2>
-
-    <table class="w-full text-center">
-
-        <thead>
-
-            <tr class="bg-gray-100 border-b">
-
-                <th class="p-3">
-                    تاریخ
-                </th>
-
-                <th class="p-3">
-                    وضعیت
-                </th>
-
-                <th class="p-3">
-                    عملیات
-                </th>
-
-            </tr>
-
-        </thead>
-
-        <tbody>
-
-        {% for record in attendance_records %}
-
-            <tr class="border-b hover:bg-gray-50">
-
-                <td class="p-3">
-
-                    {{ record.jalali_date }}
-
-                </td>
-
-                <td class="p-3">
-
-                    {% if record.status == "present" %}
-
-                        <span
-                            class="bg-green-100 text-green-700 px-3 py-1 rounded-full">
-
-                            حاضر
-
-                        </span>
-
-                    {% else %}
-
-                        <span
-                            class="bg-red-100 text-red-700 px-3 py-1 rounded-full">
-
-                            غایب
-
-                        </span>
-
-                    {% endif %}
-
-                </td>
-
-                <td class="p-3">
-
-                    <form
-                        method="post"
-                        action="/attendance/{{ record.id }}/toggle">
-
-                        {% if record.status == "present" %}
-
-                            <button
-                                class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded">
-
-                                تغییر به غایب
-
-                            </button>
-
-                        {% else %}
-
-                            <button
-                                class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">
-
-                                تغییر به حاضر
-
-                            </button>
-
-                        {% endif %}
-
-                    </form>
-
-                    <form
-   method="post"
-   action="/students/attendance/{{ record.id }}/delete"
-   style="display:inline;">
- 
-                    <button
-                        onclick="return confirm('آیا از حذف این رکورد حضور و غیاب مطمئن هستید؟')"
-                        class="bg-red-700 text-white px-3 py-1 rounded ml-2">
-
-                    حذف
-
-                    </button>
-
-                    </form>
-
-                </td>
-
-            </tr>
-
-        {% endfor %}
-
-        </tbody>
-
-    </table>
-
-</div>
-
-<a
-    href="/students/{{ student.id }}/edit"
-    class="bg-yellow-500 text-white px-5 py-2 rounded inline-block">
-
-    ویرایش شاگرد
-
-</a>
-
-<form method="post"
-      action="/students/{{ student.id }}/delete"
-      class="mt-4">
-
-    <button
-        onclick="return confirm('آیا از حذف این شاگرد مطمئن هستید؟')"
-        class="bg-red-700 text-white px-5 py-2 rounded">
-
-        حذف شاگرد
-
-    </button>
+    </button>  
 
 </form>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.2/dist/css/persian-datepicker.min.css">
+</div>  <div class="mt-8 bg-white rounded-xl shadow p-6">  <h2 class="text-2xl font-bold mb-5">  
 
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    تاریخچه حضور و غیاب  
 
-<script src="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.2/dist/js/persian-datepicker.min.js"></script>
+</h2>  
 
-<script>
+<table class="w-full text-center">  
 
-$(document).ready(function(){
+    <thead>  
 
-    $("#attendance_date").persianDatepicker({
-        format: "YYYY/MM/DD",
-        autoClose: true,
-        initialValue: false
-    });
+        <tr class="bg-gray-100 border-b">  
 
-});
+            <th class="p-3">  
+                تاریخ  
+            </th>  
 
-</script>
+            <th class="p-3">  
+                وضعیت  
+            </th>  
 
-{% endblock %}
+            <th class="p-3">  
+                عملیات  
+            </th>  
 
+        </tr>  
+
+    </thead>  
+
+    <tbody>  
+
+    {% for record in attendance_records %}  
+
+        <tr class="border-b hover:bg-gray-50">  
+
+            <td class="p-3">  
+
+                {{ record.jalali_date }}  
+
+            </td>  
+
+            <td class="p-3">  
+
+                {% if record.status == "present" %}  
+
+                    <span  
+                        class="bg-green-100 text-green-700 px-3 py-1 rounded-full">  
+
+                        حاضر  
+
+                    </span>  
+
+                {% else %}  
+
+                    <span  
+                        class="bg-red-100 text-red-700 px-3 py-1 rounded-full">  
+
+                        غایب  
+
+                    </span>  
+
+                {% endif %}  
+
+            </td>  
+
+            <td class="p-3">  
+
+                <form  
+                    method="post"  
+                    action="/attendance/{{ record.id }}/toggle">  
+
+                    {% if record.status == "present" %}  
+
+                        <button  
+                            class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded">  
+
+                            تغییر به غایب  
+
+                        </button>  
+
+                    {% else %}  
+
+                        <button  
+                            class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">  
+
+                            تغییر به حاضر  
+
+                        </button>  
+
+                    {% endif %}  
+
+                </form>  
+
+                <form
+
+method="post"
+action="/students/attendance/{{ record.id }}/delete"
+style="display:inline;">
+
+<button  
+                    onclick="return confirm('آیا از حذف این رکورد حضور و غیاب مطمئن هستید؟')"  
+                    class="bg-red-700 text-white px-3 py-1 rounded ml-2">  
+
+                حذف  
+
+                </button>  
+
+                </form>  
+
+            </td>  
+
+        </tr>  
+
+    {% endfor %}  
+
+    </tbody>  
+
+</table>
+
+</div>  <a  
+href="/students/{{ student.id }}/edit"  
+class="bg-yellow-500 text-white px-5 py-2 rounded inline-block">
+
+ویرایش شاگرد
+
+</a>  <form method="post"  
+      action="/students/{{ student.id }}/delete"  
+      class="mt-4">  <button  
+    onclick="return confirm('آیا از حذف این شاگرد مطمئن هستید؟')"  
+    class="bg-red-700 text-white px-5 py-2 rounded">  
+
+    حذف شاگرد  
+
+</button>
+
+</form>  {% endblock %}
