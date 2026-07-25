@@ -231,7 +231,10 @@ def mark_present(
         )
 
     if attendance_date:
-        today = date.fromisoformat(attendance_date)
+        today = jdatetime.datetime.strptime(
+            attendance_date,
+            "%Y/%m/%d"
+        ).togregorian().date()
     else:
         today = date.today()
 
@@ -286,7 +289,10 @@ def mark_absent(
         )
 
     if attendance_date:
-        today = date.fromisoformat(attendance_date)
+        today = jdatetime.datetime.strptime(
+            attendance_date,
+            "%Y/%m/%d"
+        ).togregorian().date()
     else:
         today = date.today()
 
