@@ -97,7 +97,7 @@
 </label>  
 
 <input  
-    type="date"  
+    type="text"  
     id="attendance_date"  
     class="border rounded p-2 mb-4">  
 
@@ -305,4 +305,16 @@ class="bg-yellow-500 text-white px-5 py-2 rounded inline-block">
 
 </button>
 
-</form>  {% endblock %}
+</form>  
+
+<script>
+$(document).ready(function () {
+    $("#attendance_date").persianDatepicker({
+        format: 'YYYY/MM/DD',
+        autoClose: true,
+        initialValue: false
+    });
+});
+</script>
+
+{% endblock %}
