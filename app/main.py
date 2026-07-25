@@ -23,6 +23,9 @@ from fastapi import Depends
 
 from sqlalchemy.orm import Session
 
+from fastapi.staticfiles import StaticFiles
+from pathlib import Path
+
 from app.dependencies import get_db
 
 from app.models import (
@@ -34,6 +37,8 @@ from app.models import (
 app = FastAPI(
     title="Gym Manager"
 )
+
+app.mount("/static", StaticFiles(directory=Path("app/static")), name="static")
 
 Base.metadata.create_all(bind=engine)
 
