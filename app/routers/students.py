@@ -473,3 +473,36 @@ def delete_attendance(
         url=f"/students/{student_id}",
         status_code=303
     )
+
+@router.post("/{student_id}/attendance/delete-all")
+def delete_all_attendance(
+    student_id: int,
+    db: Session = Depends(get_db)
+):
+    student = (
+        db.query(Student)
+        .filter(Student.id == student_id)
+        .first()
+    )
+
+    if not student:
+        raise HTTPException(
+            status_code=404,
+            detail="Student not found"
+        )
+
+    records = (
+        db.query(Attendance)
+        .filter(Attendance.student_id == student_id)
+        .all()
+    )
+
+    for record in records:
+        db.delete(record)
+
+    db.commit()
+
+    return RedirectResponse(
+        url=f"/students/{student_id}",
+        status_code=303
+    )
