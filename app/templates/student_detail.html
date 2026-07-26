@@ -171,11 +171,29 @@
 
 </form>
 
-</div>  <div class="mt-8 bg-white rounded-xl shadow p-6">  <h2 class="text-2xl font-bold mb-5">  
+</div>  <div class="mt-8 bg-white rounded-xl shadow p-6">  
 
-    تاریخچه حضور و غیاب  
+    <div class="flex justify-between items-center mb-5">
 
-</h2>  
+    <h2 class="text-2xl font-bold">
+        تاریخچه حضور و غیاب
+    </h2>
+
+    <form
+        method="post"
+        action="/students/{{ student.id }}/attendance/delete-all">
+
+        <button
+            onclick="return confirm('آیا مطمئن هستید که می‌خواهید تمام تاریخچه حضور و غیاب حذف شود؟')"
+            class="bg-red-700 hover:bg-red-800 text-white px-4 py-2 rounded">
+
+            حذف همه
+
+        </button>
+
+    </form>
+
+    </div>
 
 <table class="w-full text-center">  
 
