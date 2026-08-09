@@ -423,6 +423,40 @@ def renew_student(
         url=f"/students/{student_id}",
         status_code=303
     )
+
+@router.post("/{student_id}/update-absence")
+def update_absence_count(
+    student_id: int,
+    absence_count: int = Form(...),
+    db: Session = Depends(get_db)
+):
+
+    student = (
+        db.query(Student)
+        .filter(Student.id == student_id)
+        .first()
+    )
+
+    if not student:
+        raise HTTPException(
+            status_code=404,
+            detail="Student not found"
+        )
+
+    if absence_count < 0:
+        raise HTTPException(
+            status_code=400,
+            detail="Absence count cannot be negative"
+        )
+
+    student.absence_count = absence_count
+
+    db.commit()
+
+    return RedirectResponse(
+        url=f"/students/{student_id}",
+        status_code=303
+    )
     
 @router.post("/attendance/{attendance_id}/delete")
 def delete_attendance(
