@@ -80,15 +80,27 @@
 
 </div>  
 
-<div class="bg-red-100 rounded-xl p-4 text-center">  
+<div class="bg-red-100 rounded-xl p-4 text-center">
 
-    <div class="text-sm text-gray-600">  
-        غیبت  
-    </div>  
+    <div class="text-sm text-gray-600">
+        غیبت
+    </div>
 
-    <div class="text-3xl font-bold">  
-        {{ student.absence_count }}  
-    </div>  
+    <form
+        method="post"
+        action="/students/{{ student.id }}/update-absence"
+    >
+
+        <input
+            type="number"
+            name="absence_count"
+            min="0"
+            value="{{ student.absence_count }}"
+            class="text-3xl font-bold text-center bg-transparent w-full border-none outline-none"
+            onchange="this.form.submit()"
+        >
+
+    </form>
 
 </div>
 
