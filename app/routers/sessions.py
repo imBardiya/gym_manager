@@ -83,22 +83,14 @@ def session_detail(
             detail="Session not found"
         )
 
-    # هم سانس‌های قدیمی و هم جدید
+    # فقط از سیستم جدید (چندسانسه) استفاده می‌کنیم
     students = (
         db.query(Student)
-        .filter(
-            (Student.session_id == session_id) |
-            (Student.id.in_(
-                db.query(student_sessions.c.student_id)
-                .filter(student_sessions.c.session_id == session_id)
-            ))
-        )
+        .join(student_sessions, Student.id == student_sessions.c.student_id)
+        .filter(student_sessions.c.session_id == session_id)
         .order_by(Student.full_name)
         .all()
     )
-
-    # حذف تکراری‌ها
-    unique_students = list({s.id: s for s in students}.values())
 
     now = datetime.now()
     jalali_now = jdatetime.datetime.fromgregorian(datetime=now)
@@ -108,7 +100,7 @@ def session_detail(
         name="session_detail.html",
         context={
             "session": session,
-            "students": unique_students,
+            "students": students,
             "now": now,
             "jalali_now": jalali_now
         }
