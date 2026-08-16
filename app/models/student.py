@@ -1,7 +1,8 @@
 from sqlalchemy import Column, Integer, String, Boolean, Date, ForeignKey
-from app.database import Base
-from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
+
+from app.database import Base
+
 
 class Student(Base):
     __tablename__ = "students"
@@ -24,12 +25,21 @@ class Student(Base):
 
     notes = Column(String, nullable=True)
 
+    # سانس قدیمی - فعلاً نگهش می‌داریم
     session_id = Column(
         Integer,
         ForeignKey("sessions.id")
     )
 
+    # سانس قدیمی
     session = relationship(
         "GymSession",
         back_populates="students"
+    )
+
+    # سانس‌های جدید - چندتایی
+    sessions = relationship(
+        "GymSession",
+        secondary="student_sessions",
+        back_populates="students_multiple"
     )
