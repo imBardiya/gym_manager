@@ -24,23 +24,20 @@
 
     🏋️  
 
-    {% if student.session %}  
-
-        {{ student.session.title }}  
-
-        |  
-
-        {{ student.session.start_time }}  
-
-        -  
-
-        {{ student.session.end_time }}  
-
-    {% else %}  
-
-        بدون سانس  
-
-    {% endif %}  
+    <div class="text-gray-600">
+    🏋️ سانس‌ها:
+    {% if student.sessions %}
+        {% for s in student.sessions %}
+            <span class="bg-blue-100 text-blue-800 text-sm px-2 py-1 rounded-full mx-1">
+                {{ s.title }} ({{ s.start_time }} - {{ s.end_time }})
+            </span>
+        {% endfor %}
+    {% elif student.session %}
+        {{ student.session.title }} | {{ student.session.start_time }} - {{ student.session.end_time }}
+    {% else %}
+        <span class="text-gray-400">بدون سانس</span>
+    {% endif %}
+</div>
 
 </div>
 
