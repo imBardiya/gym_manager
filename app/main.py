@@ -7,6 +7,7 @@ from app.database import engine
 from app.models import Student
 from app.models import GymSession
 from app.models import Attendance
+from app.models import student_sessions
 
 from app.routers.students import router as students_router
 from app.routers.sessions import router as sessions_router
