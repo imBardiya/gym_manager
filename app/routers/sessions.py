@@ -78,9 +78,12 @@ def session_detail(
     )
 
     if not session:
-        raise HTTPException(status_code=404, detail="Session not found")
+        raise HTTPException(
+            status_code=404,
+            detail="Session not found"
+        )
 
-    # شاگردهایی که یا از سیستم قدیمی یا جدید به این سانس وصل هستن
+    # هم سانس‌های قدیمی و هم جدید
     students = (
         db.query(Student)
         .filter(
@@ -94,9 +97,8 @@ def session_detail(
         .all()
     )
 
-    # حذف تکراری‌ها (اگر هم تو قدیمی هم جدید باشن)
-    unique_students = {s.id: s for s in students}.values()
-    students = list(unique_students)
+    # حذف تکراری‌ها
+    unique_students = list({s.id: s for s in students}.values())
 
     now = datetime.now()
     jalali_now = jdatetime.datetime.fromgregorian(datetime=now)
@@ -106,7 +108,7 @@ def session_detail(
         name="session_detail.html",
         context={
             "session": session,
-            "students": students,
+            "students": unique_students,
             "now": now,
             "jalali_now": jalali_now
         }
