@@ -18,7 +18,7 @@ from fastapi import Request
 from fastapi.responses import RedirectResponse
 
 from app.main import templates
-from typing import Optional
+from typing import Optional, List
 
 router = APIRouter(
     prefix="/students",
