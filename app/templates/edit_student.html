@@ -49,35 +49,43 @@
     value="{{ student.absence_count }}"
     class="border p-2 w-full mb-3">
 
-        <label>
-            سانس
+        <label class="block mb-2 font-bold">
+    سانس‌ها
+</label>
+
+<div class="border rounded-lg p-3 mb-3 space-y-2">
+
+    {% for session in sessions %}
+
+        <label class="flex items-center gap-3 p-2 rounded hover:bg-gray-100 cursor-pointer">
+
+            <input
+                type="checkbox"
+                name="session_ids"
+                value="{{ session.id }}"
+                class="w-5 h-5"
+                {% if session in student.sessions %}
+                    checked
+                {% endif %}
+            >
+
+            <span>
+                {{ session.title }}
+                -
+                {{ session.start_time }}
+                تا
+                {{ session.end_time }}
+            </span>
+
         </label>
-        
-        <select
-            name="session_id"
-            class="border p-2 w-full mb-3">
-        
-            <option value="">
-                بدون سانس
-            </option>
-        
-            {% for session in sessions %}
-        
-                <option
-                    value="{{ session.id }}"
-        
-                    {% if student.session_id == session.id %}
-                    selected
-                    {% endif %}
-                >
-        
-                    {{ session.title }}
-        
-                </option>
-        
-            {% endfor %}
-        
-        </select>
+
+    {% endfor %}
+
+</div>
+
+<p class="text-sm text-gray-500 mb-4">
+    می‌توانید یک یا چند سانس را انتخاب کنید.
+</p>
 
     <textarea
         name="notes"
