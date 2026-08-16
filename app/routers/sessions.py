@@ -11,6 +11,8 @@ from app.core.templates import templates
 from app.models import Student
 from datetime import datetime
 import jdatetime
+from app.models.student_session import student_sessions
+
 
 router = APIRouter(
     prefix="/sessions",
@@ -69,31 +71,34 @@ def session_detail(
     session_id: int,
     db: Session = Depends(get_db)
 ):
-
     session = (
         db.query(GymSession)
-        .filter(
-            GymSession.id == session_id
-        )
+        .filter(GymSession.id == session_id)
         .first()
     )
 
     if not session:
-        raise HTTPException(
-            status_code=404,
-            detail="Session not found"
-        )
-    
+        raise HTTPException(status_code=404, detail="Session not found")
+
+    # شاگردهایی که یا از سیستم قدیمی یا جدید به این سانس وصل هستن
     students = (
         db.query(Student)
         .filter(
-            Student.session_id == session_id
+            (Student.session_id == session_id) |
+            (Student.id.in_(
+                db.query(student_sessions.c.student_id)
+                .filter(student_sessions.c.session_id == session_id)
+            ))
         )
+        .order_by(Student.full_name)
         .all()
     )
 
-    now = datetime.now()
+    # حذف تکراری‌ها (اگر هم تو قدیمی هم جدید باشن)
+    unique_students = {s.id: s for s in students}.values()
+    students = list(unique_students)
 
+    now = datetime.now()
     jalali_now = jdatetime.datetime.fromgregorian(datetime=now)
 
     return templates.TemplateResponse(
