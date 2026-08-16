@@ -103,3 +103,44 @@ def dashboard(request: Request,db: Session = Depends(get_db)):
             "absent_today": absent_today
         }
     )
+
+
+
+from fastapi import Depends
+from sqlalchemy.orm import Session
+from sqlalchemy import select
+from app.dependencies import get_db
+from app.models import Student
+from app.models.student_session import student_sessions
+
+@app.get("/migrate-sessions")
+def migrate_sessions(db: Session = Depends(get_db)):
+    students = db.query(Student).filter(Student.session_id.isnot(None)).all()
+    
+    migrated_count = 0
+
+    for student in students:
+        # چک می‌کنیم قبلاً مهاجرت شده یا نه
+        exists = db.execute(
+            select(student_sessions).where(
+                student_sessions.c.student_id == student.id,
+                student_sessions.c.session_id == student.session_id
+            )
+        ).first()
+
+        if not exists:
+            db.execute(
+                student_sessions.insert().values(
+                    student_id=student.id,
+                    session_id=student.session_id
+                )
+            )
+            migrated_count += 1
+
+    db.commit()
+
+    return {
+        "message": "مهاجرت با موفقیت انجام شد",
+        "migrated_students": migrated_count,
+        "total_checked": len(students)
+    }
