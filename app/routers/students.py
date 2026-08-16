@@ -335,8 +335,8 @@ def mark_absent(
 def update_student(
     student_id: int,
 
-    session_id: Optional[str] = Form(None),
-    
+    session_ids: List[int] = Form([]),
+
     full_name: str = Form(...),
 
     phone: str = Form(None),
@@ -344,7 +344,7 @@ def update_student(
     total_sessions: int = Form(...),
 
     used_sessions: int = Form(...),
-    
+
     absence_count: int = Form(...),
 
     deduct_absence: bool = Form(False),
@@ -380,19 +380,24 @@ def update_student(
 
     student.notes = notes
 
-    if session_id == "":
-        session_id = None
-    else:
-        session_id = int(session_id)
+    # دریافت سانس‌های انتخاب شده
+    selected_sessions = (
+        db.query(GymSession)
+        .filter(
+            GymSession.id.in_(session_ids)
+        )
+        .all()
+    )
 
-    student.session_id = session_id
-    
+    # جایگزین کردن سانس‌های قبلی
+    student.sessions = selected_sessions
+
     db.commit()
 
     return RedirectResponse(
-    url=f"/students/{student_id}",
-    status_code=303
-)
+        url=f"/students/{student_id}",
+        status_code=303
+    )
 
 @router.post("/{student_id}/renew")
 def renew_student(
