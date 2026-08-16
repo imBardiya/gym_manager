@@ -113,15 +113,10 @@
                 </td>
 
                 <td class="p-4 text-center">
-
-                    <span
-                        class="bg-gray-100 px-3 py-1 rounded-full">
-
-                        {{ session.students|length }}
-
-                    </span>
-
-                </td>
+    <span class="bg-gray-100 px-3 py-1 rounded-full">
+        {{ session.students_multiple|length if session.students_multiple else session.students|length }}
+    </span>
+</td>
 
                 <td class="p-4 text-center">
 
