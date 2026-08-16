@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
+
 from app.database import Base
 
 
@@ -16,7 +17,15 @@ class GymSession(Base):
 
     session_type = Column(String)
 
+    # رابطه قدیمی - فعلاً نگه می‌داریم
     students = relationship(
         "Student",
         back_populates="session"
+    )
+
+    # رابطه چندسانسی جدید
+    students_multiple = relationship(
+        "Student",
+        secondary="student_sessions",
+        back_populates="sessions"
     )
