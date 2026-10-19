@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="rtl" class="">
 
 <head>
     <meta charset="UTF-8">
@@ -7,28 +7,156 @@
     <title>{% block title %}Gym Manager{% endblock %}</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <link rel="stylesheet" href="/static/css/persian-datepicker.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {}
+            }
+        }
+    </script>
 
+    <link rel="stylesheet" href="/static/css/persian-datepicker.min.css">
     <script src="/static/js/persian-datepicker.min.js"></script>
+
+    <style>
+        /* Smooth theme transition */
+        html {
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        /* Mobile table horizontal scroll helper */
+        .table-scroll {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .table-scroll table {
+            min-width: 640px;
+        }
+        /* Active nav link highlight */
+        .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+    </style>
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
 
-    <nav class="bg-blue-600 text-white p-4">
-        <div class="container mx-auto flex gap-6">
-            <a href="/" class="font-bold">داشبورد</a>
-            <a href="/students">شاگردها</a>
-            <a href="/sessions">سانس‌ها</a>
+    <!-- Top Navigation - Red -->
+    <nav class="bg-red-600 dark:bg-red-700 text-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-3 sm:px-4">
+            <div class="flex items-center justify-between h-14 sm:h-16">
+                <!-- Brand -->
+                <div class="flex items-center gap-1 sm:gap-2 min-w-0">
+                    <span class="font-bold text-lg sm:text-xl truncate">🏋️ باشگاه</span>
+                </div>
+
+                <!-- Desktop / Tablet nav links -->
+                <div class="hidden sm:flex items-center gap-1 md:gap-2">
+                    <a href="/" class="nav-link px-3 py-2 rounded-lg hover:bg-white/20 transition text-sm md:text-base font-medium">
+                        داشبورد
+                    </a>
+                    <a href="/students" class="nav-link px-3 py-2 rounded-lg hover:bg-white/20 transition text-sm md:text-base font-medium">
+                        شاگردها
+                    </a>
+                    <a href="/sessions" class="nav-link px-3 py-2 rounded-lg hover:bg-white/20 transition text-sm md:text-base font-medium">
+                        سانس‌ها
+                    </a>
+                </div>
+
+                <!-- Theme toggle + Mobile menu button -->
+                <div class="flex items-center gap-2">
+                    <!-- Dark / Light toggle -->
+                    <button id="theme-toggle" type="button"
+                        class="p-2 rounded-lg hover:bg-white/20 transition focus:outline-none focus:ring-2 focus:ring-white/50"
+                        aria-label="تغییر تم">
+                        <!-- Sun icon (shown in dark mode) -->
+                        <svg id="icon-sun" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"></path>
+                        </svg>
+                        <!-- Moon icon (shown in light mode) -->
+                        <svg id="icon-moon" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                        </svg>
+                    </button>
+
+                    <!-- Hamburger for mobile -->
+                    <button id="mobile-menu-btn" type="button"
+                        class="sm:hidden p-2 rounded-lg hover:bg-white/20 transition focus:outline-none"
+                        aria-label="منو">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile menu (collapsed by default) -->
+            <div id="mobile-menu" class="sm:hidden hidden pb-3 space-y-1">
+                <a href="/" class="block px-3 py-2.5 rounded-lg hover:bg-white/20 transition font-medium">داشبورد</a>
+                <a href="/students" class="block px-3 py-2.5 rounded-lg hover:bg-white/20 transition font-medium">شاگردها</a>
+                <a href="/sessions" class="block px-3 py-2.5 rounded-lg hover:bg-white/20 transition font-medium">سانس‌ها</a>
+            </div>
         </div>
     </nav>
 
-    <div class="container mx-auto p-6">
-
+    <div class="container mx-auto px-3 sm:px-4 py-4 sm:py-6">
         {% block content %}
         {% endblock %}
-
     </div>
+
+    <script>
+        // ---- Theme toggle ----
+        (function () {
+            const html = document.documentElement;
+            const toggleBtn = document.getElementById('theme-toggle');
+            const iconSun = document.getElementById('icon-sun');
+            const iconMoon = document.getElementById('icon-moon');
+
+            function applyTheme(isDark) {
+                if (isDark) {
+                    html.classList.add('dark');
+                    iconSun.classList.remove('hidden');
+                    iconMoon.classList.add('hidden');
+                } else {
+                    html.classList.remove('dark');
+                    iconSun.classList.add('hidden');
+                    iconMoon.classList.remove('hidden');
+                }
+            }
+
+            // Load saved preference or system preference
+            const saved = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const isDark = saved === 'dark' || (!saved && prefersDark);
+            applyTheme(isDark);
+
+            toggleBtn.addEventListener('click', () => {
+                const nowDark = !html.classList.contains('dark');
+                applyTheme(nowDark);
+                localStorage.setItem('theme', nowDark ? 'dark' : 'light');
+            });
+        })();
+
+        // ---- Mobile menu ----
+        (function () {
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+            });
+        })();
+
+        // ---- Highlight active nav link ----
+        (function () {
+            const path = window.location.pathname;
+            document.querySelectorAll('.nav-link, #mobile-menu a').forEach(a => {
+                const href = a.getAttribute('href');
+                if (href === path || (href !== '/' && path.startsWith(href))) {
+                    a.classList.add('active', 'bg-white/20');
+                }
+            });
+        })();
+    </script>
 
 </body>
 </html>

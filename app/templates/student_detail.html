@@ -8,27 +8,27 @@
 
 <h1 class="text-3xl font-bold mb-6">  
     {{ student.full_name }}  
-</h1>  <div class="bg-white rounded-xl shadow p-6 mb-6">  <h1 class="text-3xl font-bold mb-2">  
+</h1>  <div class="bg-white dark:bg-gray-800 rounded-xl shadow p-6 mb-6">  <h1 class="text-3xl font-bold mb-2">  
 
     👤 {{ student.full_name }}  
 
 </h1>  
 
-<div class="text-gray-600 mb-2">  
+<div class="text-gray-600 dark:text-gray-300 mb-2">  
 
     📞 {{ student.phone or "ثبت نشده" }}  
 
 </div>  
 
-<div class="text-gray-600">  
+<div class="text-gray-600 dark:text-gray-300">  
 
     🏋️  
 
-    <div class="text-gray-600">
+    <div class="text-gray-600 dark:text-gray-300">
     🏋️ سانس‌ها:
     {% if student.sessions %}
         {% for s in student.sessions %}
-            <span class="bg-blue-100 text-blue-800 text-sm px-2 py-1 rounded-full mx-1">
+            <span class="bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300 text-sm px-2 py-1 rounded-full mx-1">
                 {{ s.title }} ({{ s.start_time }} - {{ s.end_time }})
             </span>
         {% endfor %}
@@ -41,65 +41,55 @@
 
 </div>
 
-</div>  <div class="grid grid-cols-4 gap-4 mb-6">  <div class="bg-blue-100 rounded-xl p-4 text-center">  
+</div>
 
-    <div class="text-sm text-gray-600">  
-        جلسات کل  
-    </div>  
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6">
 
-    <div class="text-3xl font-bold">  
-        {{ student.total_sessions }}  
-    </div>  
-
-</div>  
-
-<div class="bg-green-100 rounded-xl p-4 text-center">  
-
-    <div class="text-sm text-gray-600">  
-        مصرف شده  
-    </div>  
-
-    <div class="text-3xl font-bold">  
-        {{ student.used_sessions }}  
-    </div>  
-
-</div>  
-
-<div class="bg-yellow-100 rounded-xl p-4 text-center">  
-
-    <div class="text-sm text-gray-600">  
-        باقی مانده  
-    </div>  
-
-    <div class="text-3xl font-bold">  
-        {{ student.total_sessions - student.used_sessions }}  
-    </div>  
-
-</div>  
-
-<div class="bg-red-100 rounded-xl p-4 text-center">
-
-    <div class="text-sm text-gray-600">
-        غیبت
+    <div class="bg-blue-600 dark:bg-blue-700 text-white rounded-xl p-4 text-center shadow">
+        <div class="text-sm opacity-90">
+            جلسات کل
+        </div>
+        <div class="text-3xl font-bold mt-1">
+            {{ student.total_sessions }}
+        </div>
     </div>
 
-    <form
-        method="post"
-        action="/students/{{ student.id }}/update-absence"
-    >
+    <div class="bg-emerald-600 dark:bg-emerald-700 text-white rounded-xl p-4 text-center shadow">
+        <div class="text-sm opacity-90">
+            مصرف شده
+        </div>
+        <div class="text-3xl font-bold mt-1">
+            {{ student.used_sessions }}
+        </div>
+    </div>
 
-        <input
-            type="number"
-            name="absence_count"
-            min="0"
-            value="{{ student.absence_count }}"
-            class="text-3xl font-bold text-center bg-transparent w-full border-none outline-none"
-            onchange="this.form.submit()"
+    <div class="bg-amber-500 dark:bg-amber-600 text-white rounded-xl p-4 text-center shadow">
+        <div class="text-sm opacity-90">
+            باقی مانده
+        </div>
+        <div class="text-3xl font-bold mt-1">
+            {{ student.total_sessions - student.used_sessions }}
+        </div>
+    </div>
+
+    <div class="bg-rose-600 dark:bg-rose-700 text-white rounded-xl p-4 text-center shadow">
+        <div class="text-sm opacity-90">
+            غیبت
+        </div>
+        <form
+            method="post"
+            action="/students/{{ student.id }}/update-absence"
         >
-
-    </form>
-
-</div>
+            <input
+                type="number"
+                name="absence_count"
+                min="0"
+                value="{{ student.absence_count }}"
+                class="text-3xl font-bold text-center bg-transparent w-full border-none outline-none text-white"
+                onchange="this.form.submit()"
+            >
+        </form>
+    </div>
 
 </div>  <div class="mt-6">  <label class="block mb-2 font-bold">  
     تاریخ ثبت حضور و غیاب  
@@ -108,7 +98,7 @@
 <input  
     type="text"  
     id="attendance_date"  
-    class="border rounded p-2 mb-4">  
+    class="border dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded p-2 mb-4 w-full sm:w-auto">  
 
 <div class="flex gap-4">  
 
@@ -152,7 +142,7 @@
 
 </div>
 
-</div>  <div class="mt-6 bg-white rounded-xl shadow p-6">  <h2 class="text-xl font-bold mb-4">  
+</div>  <div class="mt-6 bg-white dark:bg-gray-800 rounded-xl shadow p-6">  <h2 class="text-xl font-bold mb-4">  
 
     تمدید جلسات  
 
@@ -169,7 +159,7 @@
         min="1"  
         placeholder="تعداد جلسات"  
 
-        class="border rounded-lg p-2">  
+        class="border dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg p-2">  
 
     <button  
         class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg">  
@@ -180,7 +170,7 @@
 
 </form>
 
-</div>  <div class="mt-8 bg-white rounded-xl shadow p-6">  
+</div>  <div class="mt-8 bg-white dark:bg-gray-800 rounded-xl shadow p-6">  
 
     <div class="flex justify-between items-center mb-5">
 
@@ -204,11 +194,11 @@
 
     </div>
 
-<table class="w-full text-center">  
+<div class="table-scroll"><table class="w-full text-center">  
 
     <thead>  
 
-        <tr class="bg-gray-100 border-b">  
+        <tr class="bg-gray-200 dark:bg-gray-700 border-b dark:border-gray-600 text-gray-800 dark:text-gray-100">  
 
             <th class="p-3">  
                 تاریخ  
@@ -230,7 +220,7 @@
 
     {% for record in attendance_records %}  
 
-        <tr class="border-b hover:bg-gray-50">  
+        <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100">  
 
             <td class="p-3">  
 
@@ -243,7 +233,7 @@
                 {% if record.status == "present" %}  
 
                     <span  
-                        class="bg-green-100 text-green-700 px-3 py-1 rounded-full">  
+                        class="bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 px-3 py-1 rounded-full">  
 
                         حاضر  
 
@@ -252,7 +242,7 @@
                 {% else %}  
 
                     <span  
-                        class="bg-red-100 text-red-700 px-3 py-1 rounded-full">  
+                        class="bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-300 px-3 py-1 rounded-full">  
 
                         غایب  
 
@@ -314,7 +304,7 @@ style="display:inline;">
 
     </tbody>  
 
-</table>
+</table></div>
 
 </div>  <a  
 href="/students/{{ student.id }}/edit"  

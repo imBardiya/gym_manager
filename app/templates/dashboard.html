@@ -6,86 +6,65 @@
 
 {% block content %}
 
-<h1 class="text-3xl font-bold mb-8">
-
+<h1 class="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8">
     داشبورد مدیریت باشگاه
-
 </h1>
 
-<div class="grid grid-cols-2 md:grid-cols-3 gap-5">
+<div class="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-5">
 
-    <div class="bg-white rounded-xl shadow p-5">
-
-        <div class="text-gray-500">
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow p-4 sm:p-5">
+        <div class="text-gray-500 dark:text-gray-400 text-sm sm:text-base">
             کل شاگردها
         </div>
-
-        <div class="text-4xl font-bold mt-2">
+        <div class="text-3xl sm:text-4xl font-bold mt-2">
             {{ total_students }}
         </div>
-
     </div>
 
-    <div class="bg-white rounded-xl shadow p-5">
-
-        <div class="text-gray-500">
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow p-4 sm:p-5">
+        <div class="text-gray-500 dark:text-gray-400 text-sm sm:text-base">
             تعداد سانس‌ها
         </div>
-
-        <div class="text-4xl font-bold mt-2">
+        <div class="text-3xl sm:text-4xl font-bold mt-2">
             {{ total_sessions }}
         </div>
-
     </div>
 
-    <div class="bg-white rounded-xl shadow p-5">
-
-        <div class="text-gray-500">
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow p-4 sm:p-5">
+        <div class="text-gray-500 dark:text-gray-400 text-sm sm:text-base">
             نیازمند تمدید
         </div>
-
-        <div class="text-4xl font-bold text-red-600 mt-2">
+        <div class="text-3xl sm:text-4xl font-bold text-red-600 dark:text-red-400 mt-2">
             {{ students_need_renew }}
         </div>
-
     </div>
 
-    <div class="bg-white rounded-xl shadow p-5">
-
-        <div class="text-gray-500">
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow p-4 sm:p-5">
+        <div class="text-gray-500 dark:text-gray-400 text-sm sm:text-base">
             حضور امروز
         </div>
-
-        <div class="text-4xl font-bold text-green-600 mt-2">
+        <div class="text-3xl sm:text-4xl font-bold text-green-600 dark:text-green-400 mt-2">
             {{ present_today }}
         </div>
-
     </div>
 
-    <div class="bg-white rounded-xl shadow p-5">
-
-        <div class="text-gray-500">
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow p-4 sm:p-5">
+        <div class="text-gray-500 dark:text-gray-400 text-sm sm:text-base">
             غیبت امروز
         </div>
-
-        <div class="text-4xl font-bold text-red-600 mt-2">
+        <div class="text-3xl sm:text-4xl font-bold text-red-600 dark:text-red-400 mt-2">
             {{ absent_today }}
         </div>
-
     </div>
 
 </div>
 
-<div class="mt-8">
-
+<div class="mt-6 sm:mt-8">
     <a
         href="/backup/download"
-        class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-lg">
-
+        class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 sm:px-5 py-2.5 rounded-lg inline-block text-sm sm:text-base">
         ⬇ دانلود بکاپ
-
     </a>
-
 </div>
 
 {% endblock %}

@@ -14,18 +14,18 @@
     <input
         name="full_name"
         value="{{ student.full_name }}"
-        class="border p-2 w-full mb-3">
+        class="border dark:border-gray-600 dark:bg-gray-700 dark:text-white p-2 w-full mb-3 rounded">
 
     <input
         name="phone"
         value="{{ student.phone or '' }}"
-        class="border p-2 w-full mb-3">
+        class="border dark:border-gray-600 dark:bg-gray-700 dark:text-white p-2 w-full mb-3 rounded">
 
     <input
         name="total_sessions"
         type="number"
         value="{{ student.total_sessions }}"
-        class="border p-2 w-full mb-3">
+        class="border dark:border-gray-600 dark:bg-gray-700 dark:text-white p-2 w-full mb-3 rounded">
 
         <label>
     جلسات مصرف شده
@@ -36,7 +36,7 @@
     type="number"
     min="0"
     value="{{ student.used_sessions }}"
-    class="border p-2 w-full mb-3">
+    class="border dark:border-gray-600 dark:bg-gray-700 dark:text-white p-2 w-full mb-3 rounded">
 
 <label>
     تعداد غیبت
@@ -47,7 +47,7 @@
     type="number"
     min="0"
     value="{{ student.absence_count }}"
-    class="border p-2 w-full mb-3">
+    class="border dark:border-gray-600 dark:bg-gray-700 dark:text-white p-2 w-full mb-3 rounded">
 
         <label class="block mb-2 font-bold">
     سانس‌ها
@@ -89,7 +89,7 @@
 
     <textarea
         name="notes"
-        class="border p-2 w-full mb-3">{{ student.notes or '' }}</textarea>
+        class="border dark:border-gray-600 dark:bg-gray-700 dark:text-white p-2 w-full mb-3 rounded">{{ student.notes or '' }}</textarea>
 
     <label>
 
@@ -110,7 +110,7 @@
 
     
     <button
-        class="bg-blue-600 text-white px-5 py-2 rounded">
+        class="bg-red-600 text-white px-5 py-2 rounded">
 
         ذخیره
 

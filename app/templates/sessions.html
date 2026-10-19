@@ -6,137 +6,85 @@
 
 {% block content %}
 
-<div class="flex justify-between items-center mb-6">
+<div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-4 sm:mb-6">
 
-    <h1 class="text-3xl font-bold">
-
+    <h1 class="text-2xl sm:text-3xl font-bold">
         مدیریت سانس ها
-
     </h1>
 
     <a
         href="/sessions/add"
-        class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg shadow">
-
+        class="bg-green-600 hover:bg-green-700 text-white px-4 sm:px-5 py-2.5 rounded-lg shadow text-center text-sm sm:text-base">
         ➕ افزودن سانس
-
     </a>
 
 </div>
 
-<div class="bg-white rounded-xl shadow overflow-hidden">
+<div class="bg-white dark:bg-gray-800 rounded-xl shadow overflow-hidden">
 
+    <div class="table-scroll">
     <table class="w-full">
 
         <thead>
-
-            <tr class="bg-gray-100 text-gray-700">
-
-                <th class="p-4 text-right">
-                    عنوان
-                </th>
-
-                <th class="p-4 text-center">
-                    ساعت
-                </th>
-
-                <th class="p-4 text-center">
-                    نوع
-                </th>
-
-                <th class="p-4 text-center">
-                    تعداد اعضا
-                </th>
-
-                <th class="p-4 text-center">
-                    عملیات
-                </th>
-
+            <tr class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
+                <th class="p-3 sm:p-4 text-right text-sm">عنوان</th>
+                <th class="p-3 sm:p-4 text-center text-sm">ساعت</th>
+                <th class="p-3 sm:p-4 text-center text-sm">نوع</th>
+                <th class="p-3 sm:p-4 text-center text-sm">تعداد اعضا</th>
+                <th class="p-3 sm:p-4 text-center text-sm">عملیات</th>
             </tr>
-
         </thead>
 
         <tbody>
-
         {% for session in sessions %}
 
-            <tr
-                class="border-b hover:bg-gray-50 transition">
+            <tr class="border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
 
-                <td class="p-4 font-medium">
-
+                <td class="p-3 sm:p-4 font-medium text-sm sm:text-base">
                     {{ session.title }}
-
                 </td>
 
-                <td class="p-4 text-center">
-
-                    {{ session.start_time }}
-
-                    -
-
-                    {{ session.end_time }}
-
+                <td class="p-3 sm:p-4 text-center text-sm">
+                    {{ session.start_time }} - {{ session.end_time }}
                 </td>
 
-                <td class="p-4 text-center">
-
+                <td class="p-3 sm:p-4 text-center">
                     {% if session.session_type == "odd" %}
-
-                        <span
-                            class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full">
-
+                        <span class="bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 px-2.5 py-1 rounded-full text-sm">
                             فرد
-
                         </span>
-
                     {% elif session.session_type == "even" %}
-
-                        <span
-                            class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full">
-
+                        <span class="bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300 px-2.5 py-1 rounded-full text-sm">
                             زوج
-
                         </span>
-
                     {% else %}
-
-                        <span
-                            class="bg-green-100 text-green-700 px-3 py-1 rounded-full">
-
+                        <span class="bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 px-2.5 py-1 rounded-full text-sm">
                             هر روز
-
                         </span>
-
                     {% endif %}
-
                 </td>
 
-                <td class="p-4 text-center">
-    <span class="bg-gray-100 px-3 py-1 rounded-full">
-        {{ session.students_multiple|length if session.students_multiple else session.students|length }}
-    </span>
-</td>
+                <td class="p-3 sm:p-4 text-center">
+                    <span class="bg-gray-100 dark:bg-gray-700 px-2.5 py-1 rounded-full text-sm">
+                        {{ session.students_multiple|length if session.students_multiple else session.students|length }}
+                    </span>
+                </td>
 
-                <td class="p-4 text-center">
-
+                <td class="p-3 sm:p-4 text-center">
                     <a
                         href="/sessions/{{ session.id }}"
-                        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
-
+                        class="bg-red-600 hover:bg-red-700 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-sm inline-block">
                         مشاهده
-
                     </a>
-
                 </td>
 
             </tr>
 
         {% endfor %}
-
         </tbody>
 
     </table>
+    </div>
 
 </div>
 

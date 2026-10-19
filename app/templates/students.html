@@ -6,176 +6,124 @@
 
 {% block content %}
 
-<div class="bg-white rounded-xl shadow p-4 mb-6">
+<div class="bg-white dark:bg-gray-800 rounded-xl shadow p-3 sm:p-4 mb-4 sm:mb-6">
 
     <form
         method="get"
-        class="flex gap-3">
+        class="flex flex-col sm:flex-row gap-3">
 
         <input
             type="text"
             name="search"
             value="{{ search or '' }}"
             placeholder="جستجوی شاگرد..."
-
-            class="border rounded-lg p-2 flex-1">
+            class="border dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-lg p-2.5 flex-1 w-full">
 
         <button
-            class="bg-blue-600 text-white px-5 py-2 rounded-lg">
-
+            class="bg-red-600 hover:bg-red-700 text-white px-5 py-2.5 rounded-lg font-medium whitespace-nowrap">
             جستجو
-
         </button>
 
     </form>
 
 </div>
 
-<div class="flex justify-between items-center mb-6">
+<div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 mb-4 sm:mb-6">
 
-    <h1 class="text-3xl font-bold">
-
+    <h1 class="text-2xl sm:text-3xl font-bold">
         لیست شاگردها
-
     </h1>
 
     <a
         href="/students/add"
-        class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg shadow">
-
+        class="bg-green-600 hover:bg-green-700 text-white px-4 sm:px-5 py-2.5 rounded-lg shadow text-center text-sm sm:text-base">
         ➕ افزودن شاگرد
-
     </a>
 
 </div>
 
-<div class="bg-white rounded-xl shadow overflow-hidden">
+<div class="bg-white dark:bg-gray-800 rounded-xl shadow overflow-hidden">
 
+    <div class="table-scroll">
     <table class="w-full">
 
         <thead>
-
-            <tr class="bg-gray-100 text-gray-700">
-
-                <th class="p-4 text-right">
-                    نام
-                </th>
-
-                <th class="p-4 text-center">
-                    سانس
-                </th>
-
-                <th class="p-4 text-center">
-                    جلسات مانده
-                </th>
-
-                <th class="p-4 text-center">
-                    غیبت
-                </th>
-
-                <th class="p-4 text-center">
-                    عملیات
-                </th>
-
+            <tr class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
+                <th class="p-3 sm:p-4 text-right text-sm">نام</th>
+                <th class="p-3 sm:p-4 text-center text-sm">سانس</th>
+                <th class="p-3 sm:p-4 text-center text-sm">جلسات مانده</th>
+                <th class="p-3 sm:p-4 text-center text-sm">غیبت</th>
+                <th class="p-3 sm:p-4 text-center text-sm">عملیات</th>
             </tr>
-
         </thead>
 
         <tbody>
-
         {% for student in students %}
 
             {% set remaining =
             student.total_sessions -
             student.used_sessions %}
 
-            <tr
-                class="border-b hover:bg-gray-50 transition">
+            <tr class="border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition">
 
-                <td class="p-4 font-medium">
-
+                <td class="p-3 sm:p-4 font-medium text-sm sm:text-base">
                     {{ student.full_name }}
-
                 </td>
 
-                <td class="p-4 text-center">
+                <td class="p-3 sm:p-4 text-center">
     {% if student.sessions %}
         {% for s in student.sessions %}
-            <span class="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full inline-block mb-1">
+            <span class="bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300 text-xs px-2 py-1 rounded-full inline-block mb-1">
                 {{ s.title }}
             </span>
             {% if not loop.last %}<br>{% endif %}
         {% endfor %}
     {% elif student.session %}
-        {{ student.session.title }}
+        <span class="bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300 text-xs px-2 py-1 rounded-full">
+            {{ student.session.title }}
+        </span>
     {% else %}
-        <span class="text-gray-400">بدون سانس</span>
+        <span class="text-gray-400 text-xs">بدون سانس</span>
     {% endif %}
                 </td>
 
-                <td class="p-4 text-center">
-
+                <td class="p-3 sm:p-4 text-center">
                     {% if remaining <= 0 %}
-
-                        <span
-                            class="bg-red-100 text-red-700 px-3 py-1 rounded-full">
-
+                        <span class="bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300 px-2.5 py-1 rounded-full text-sm">
                             {{ remaining }}
-
                         </span>
-
                     {% elif remaining <= 5 %}
-
-                        <span
-                            class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full">
-
+                        <span class="bg-yellow-100 dark:bg-yellow-900/40 text-yellow-700 dark:text-yellow-300 px-2.5 py-1 rounded-full text-sm">
                             {{ remaining }}
-
                         </span>
-
                     {% else %}
-
-                        <span
-                            class="bg-green-100 text-green-700 px-3 py-1 rounded-full">
-
+                        <span class="bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 px-2.5 py-1 rounded-full text-sm">
                             {{ remaining }}
-
                         </span>
-
                     {% endif %}
-
                 </td>
 
-                <td class="p-4 text-center">
-
-                    <span
-                        class="bg-gray-100 px-3 py-1 rounded-full">
-
+                <td class="p-3 sm:p-4 text-center">
+                    <span class="bg-gray-100 dark:bg-gray-700 px-2.5 py-1 rounded-full text-sm">
                         {{ student.absence_count }}
-
                     </span>
-
                 </td>
 
-                <td class="p-4 text-center">
-
+                <td class="p-3 sm:p-4 text-center">
                     <a
                         href="/students/{{ student.id }}"
-                        class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
-
+                        class="bg-red-600 hover:bg-red-700 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg text-sm inline-block">
                         مشاهده
-
                     </a>
-
                 </td>
 
             </tr>
 
         {% endfor %}
-
         </tbody>
 
     </table>
+    </div>
 
 </div>
 
